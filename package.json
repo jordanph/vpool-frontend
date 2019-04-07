@@ -16,8 +16,8 @@
     "typescript": "^3.4.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "REACT_APP_VECHAIN_POOL=0x43f3e88b734Cc8F7085D3A087D1a88167b495d78 react-scripts start",
+    "build": "REACT_APP_VECHAIN_POOL=0x43f3e88b734Cc8F7085D3A087D1a88167b495d78 react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -29,5 +29,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@vechain/connex": "^1.2.3"
+  }
 }
