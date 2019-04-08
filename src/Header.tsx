@@ -21,7 +21,7 @@ const Header = () => {
       <Typography variant="h5" gutterBottom style={HeaderTypographyStyles}>
         <VPoolImage />
         <span>
-          V-POOL <AlphaBadge />
+          VPOOL <AlphaBadge />
         </span>
       </Typography>
     </HeaderDiv>

@@ -25,20 +25,34 @@ const Information: FunctionComponent<InformationProps> = ({
   currentBlockNumber
 }) => {
   const [accountAddress, setAccountAddress] = useState<string>();
-  // @ts-ignore
-  const cometWallet = window.thor;
   const { loading, currentInformation } = getInformation(
     currentBlockNumber,
     accountAddress
   );
 
   const getAccountAddress = async () => {
-    if (cometWallet) {
+    // @ts-ignore
+    if (window.thor) {
       // comet account
       try {
         // @ts-ignore
         const [cometAccount] = await thor.enable();
         setAccountAddress(cometAccount);
+      } catch {}
+    } else {
+      const signingService = connex.vendor.sign("cert");
+
+      try {
+        const identification = await signingService.request({
+          purpose: "identification",
+          payload: {
+            type: "text",
+            content:
+              "This identification is for your public address to be used to calculate your current shares within VPool.\n\n Please accept if you would like to know your balance."
+          }
+        });
+
+        setAccountAddress(identification.annex.signer);
       } catch {}
     }
   };
@@ -52,7 +66,7 @@ const Information: FunctionComponent<InformationProps> = ({
         <Typography variant="caption" gutterBottom align="center">
           Pool Generation: {currentInformation!.generationRate} VTHOR/day
         </Typography>
-        {cometWallet && accountAddress && (
+        {accountAddress && (
           <>
             <Typography variant="caption" gutterBottom align="center">
               Your share: {currentInformation!.balanceOfUser} VET
@@ -63,7 +77,7 @@ const Information: FunctionComponent<InformationProps> = ({
             </Typography>
           </>
         )}
-        {cometWallet && !accountAddress && (
+        {!accountAddress && (
           <>
             <OpaqueDiv>
               <Button
@@ -94,16 +108,12 @@ const Information: FunctionComponent<InformationProps> = ({
         <Typography variant="caption" gutterBottom align="center">
           Your share: <Loading /> VET
         </Typography>
-        {cometWallet && (
-          <Typography variant="caption" gutterBottom align="center">
-            Pool Generation: <Loading /> VTHOR/day
-          </Typography>
-        )}
-        {cometWallet && (
-          <Typography variant="caption" gutterBottom align="center">
-            Your Generation: <Loading /> VTHOR/day
-          </Typography>
-        )}
+        <Typography variant="caption" gutterBottom align="center">
+          Pool Generation: <Loading /> VTHOR/day
+        </Typography>
+        <Typography variant="caption" gutterBottom align="center">
+          Your Generation: <Loading /> VTHOR/day
+        </Typography>
       </div>
     );
   }
