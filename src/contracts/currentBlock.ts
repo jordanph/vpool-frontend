@@ -14,16 +14,21 @@ export const getCurrentBlock = () => {
       setLoading(false);
     };
 
-    connex.thor
-      .ticker()
-      .next()
-      .then(async () => {
-        const currentBlock = await connex.thor.block().get();
+    const ticker = async () => {
+      await connex.thor
+        .ticker()
+        .next()
+        .then(async () => {
+          const currentBlock = await connex.thor.block().get();
 
-        setCurrentBlockNumber(currentBlock!.number);
-      });
+          setCurrentBlockNumber(currentBlock!.number);
+        });
+
+      ticker();
+    };
 
     getCurrentBlock();
+    ticker();
   }, []);
 
   return { loading, currentBlockNumber };

@@ -46,7 +46,7 @@ const App = () => {
             alignItems: "center"
           }}
         >
-          {loading && <Overlay />}
+          {!window.connex && <Overlay />}
           <Tabs
             value={tab}
             indicatorColor="primary"
