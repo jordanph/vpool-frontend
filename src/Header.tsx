@@ -1,28 +1,30 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
-import vPoolImage from "./images/vpool.svg";
 import AlphaBadge from "./AlphaBadge";
+import styled from "styled-components";
+import VPoolImage from "./images/VPoolImage";
+
+const HeaderDiv = styled.div`
+  width: 500px;
+  margin: 20px auto;
+  padding: 10px;
+`;
+
+const HeaderTypographyStyles = {
+  color: "rgb(123, 123, 123)",
+  paddingLeft: 20
+};
 
 const Header = () => {
   return (
-    <div
-      style={{
-        width: 500,
-        margin: "20px auto",
-        padding: 10
-      }}
-    >
-      <Typography
-        variant="h5"
-        gutterBottom
-        style={{ color: "rgb(123, 123, 123)", paddingLeft: 20 }}
-      >
-        <img style={{ height: 18, marginRight: 10 }} src={vPoolImage} />
+    <HeaderDiv>
+      <Typography variant="h5" gutterBottom style={HeaderTypographyStyles}>
+        <VPoolImage />
         <span>
-          V-POOL <AlphaBadge />
+          VePool <AlphaBadge />
         </span>
       </Typography>
-    </div>
+    </HeaderDiv>
   );
 };
 

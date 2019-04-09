@@ -1,2 +1,3 @@
 # v-pool-frontend
-The frontend for VPool
+
+The frontend for VePool

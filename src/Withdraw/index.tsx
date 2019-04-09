@@ -2,6 +2,10 @@ import React, { useState, ChangeEvent } from "react";
 import { TextField, Button, InputAdornment } from "@material-ui/core";
 import VETImage from "../images/vechain-logo.png";
 import styled from "styled-components";
+import { withdrawABI } from "../contracts/vpoolABI";
+import BigNumber from "bignumber.js";
+
+const account = process.env.REACT_APP_VECHAIN_POOL!;
 
 const NumberTextField = styled(({ ...props }) => <TextField {...props} />)`
   & input[type="number"]::-webkit-inner-spin-button,
@@ -14,22 +18,44 @@ const NumberTextField = styled(({ ...props }) => <TextField {...props} />)`
   }
 `;
 
-const Deposit = () => {
-  const [depositAmount, setDepositAmount] = useState<number>();
+const Withdraw = () => {
+  const [withdrawAmount, setWithdrawAmount] = useState<number>();
   const [invalidInput, setInvalidInput] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleChange = (inputEvent: ChangeEvent<HTMLInputElement>) => {
     try {
-      setDepositAmount(parseInt(inputEvent.target.value));
+      setWithdrawAmount(parseInt(inputEvent.target.value));
       setInvalidInput(false);
     } catch {
       setInvalidInput(true);
     }
   };
 
-  const onClick = () => {
-    if (!depositAmount || depositAmount <= 0) {
+  const onClick = async () => {
+    if (!withdrawAmount || withdrawAmount <= 0) {
       setInvalidInput(true);
+    } else {
+      setLoading(true);
+
+      const signingService = connex.vendor.sign("tx");
+
+      const amountToWithdraw =
+        "0x" +
+        new BigNumber(withdrawAmount)
+          .multipliedBy(1e18)
+          .dp(0)
+          .toString(16);
+
+      const withdrawClause = connex.thor
+        .account(account)
+        .method(withdrawABI)
+        .asClause(amountToWithdraw);
+
+      try {
+        await signingService.request([{ ...withdrawClause }]);
+      } catch {}
+      setLoading(false);
     }
   };
 
@@ -44,6 +70,7 @@ const Deposit = () => {
         margin="normal"
         variant="outlined"
         error={invalidInput}
+        disabled={loading}
         InputProps={{
           endAdornment: (
             <InputAdornment position="start">
@@ -58,6 +85,7 @@ const Deposit = () => {
         variant="contained"
         color="primary"
         style={{ marginBottom: 20 }}
+        disabled={loading}
         fullWidth
         onClick={onClick}
       >
@@ -67,4 +95,4 @@ const Deposit = () => {
   );
 };
 
-export default Deposit;
+export default Withdraw;
