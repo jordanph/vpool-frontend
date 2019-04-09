@@ -48,7 +48,7 @@ const Information: FunctionComponent<InformationProps> = ({
           payload: {
             type: "text",
             content:
-              "This identification is for your public address to be used to calculate your current shares within VPool.\n\n Please accept if you would like to know your balance."
+              "This identification is for your public address to be used to calculate your current shares within VePool.\n\n Please accept if you would like to know your balance."
           }
         });
 

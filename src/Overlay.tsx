@@ -22,7 +22,7 @@ const Overlay = () => {
         <Grid item xs={10}>
           <Paper style={{ padding: 20 }}>
             <Typography variant="caption">
-              In order to connect to the Vechain network and use VPool, please
+              In order to connect to the Vechain network and use VePool, please
               install one of the following:
             </Typography>
           </Paper>
