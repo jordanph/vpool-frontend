@@ -27,8 +27,10 @@ export const getCurrentBlock = () => {
       ticker();
     };
 
-    getCurrentBlock();
-    ticker();
+    if (window.connex) {
+      getCurrentBlock();
+      ticker();
+    }
   }, []);
 
   return { loading, currentBlockNumber };
