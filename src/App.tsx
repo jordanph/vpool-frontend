@@ -8,11 +8,13 @@ import Information from "./Information";
 import Header from "./Header";
 import { getCurrentBlock } from "./contracts/currentBlock";
 import Overlay from "./Overlay";
+import Convert from "./Convert";
 import styled from "styled-components";
 
 const tabEnum = {
   Deposit: 0,
-  Withdraw: 1
+  Withdraw: 1,
+  Convert: 2
 };
 
 const MainDiv = styled.div`
@@ -55,11 +57,14 @@ const App = () => {
           >
             <Tab label="Deposit" />
             <Tab label="Withdraw" />
-            <Tab label="Convert" disabled />
+            <Tab label="Convert" />
           </Tabs>
           <MainDiv>
             {tab == tabEnum.Deposit && <Deposit />}
             {tab == tabEnum.Withdraw && <Withdraw />}
+            {tab == tabEnum.Convert && (
+              <Convert currentBlock={currentBlockNumber} />
+            )}
             <Information currentBlockNumber={currentBlockNumber} />
           </MainDiv>
         </Paper>
