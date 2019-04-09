@@ -5,7 +5,7 @@ interface ConversionRate {
   amountVET: string;
 }
 
-const conversionAccount = "0xB74C4EBd95F70Dd9794d8c49053a297689950b63";
+const conversionAccount = "0xf9F99f982f3Ea9020f0A0afd4D4679dFEe1B63cf";
 const thorAccount = "0x0000000000000000000000000000456e65726779";
 const account = process.env.REACT_APP_VECHAIN_POOL!;
 
@@ -73,7 +73,7 @@ export const getConversion = (currentBlock: number | undefined) => {
         const VETConversion = await connex.thor
           .account(conversionAccount)
           .method(conversionABI)
-          .call(account);
+          .call(thorBalance.decoded!["0"]);
 
         const formattedVETAmount = (VETConversion.decoded!["0"] / 1e18).toFixed(
           2

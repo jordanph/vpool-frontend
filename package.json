@@ -18,8 +18,8 @@
     "typescript": "^3.4.2"
   },
   "scripts": {
-    "start": "REACT_APP_VECHAIN_POOL=0x15424EFb108004Cc3c22B33Af289E6A6b563F9eb react-scripts start",
-    "build": "REACT_APP_VECHAIN_POOL=0x15424EFb108004Cc3c22B33Af289E6A6b563F9eb react-scripts build",
+    "start": "REACT_APP_VECHAIN_POOL=0x3D0Cc8C6b70eFFc18001B76910B1FE063832f89E react-scripts start",
+    "build": "REACT_APP_VECHAIN_POOL=0x3D0Cc8C6b70eFFc18001B76910B1FE063832f89E react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
