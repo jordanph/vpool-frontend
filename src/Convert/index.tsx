@@ -1,14 +1,23 @@
 import React, { FunctionComponent } from "react";
-import {
-  TextField,
-  Button,
-  Grid,
-  Paper,
-  InputAdornment
-} from "@material-ui/core";
+import { TextField, Button, InputAdornment } from "@material-ui/core";
 import VETImage from "../images/vechain-logo.png";
 import THORImage from "../images/thor.png";
 import { getConversion } from "../contracts/conversionRate";
+
+const energyConversionABI = {
+  constant: true,
+  inputs: [],
+  name: "convertEnergy",
+  outputs: [
+    {
+      name: "",
+      type: "uint256"
+    }
+  ],
+  payable: false,
+  stateMutability: "view",
+  type: "function"
+};
 
 const account = process.env.REACT_APP_VECHAIN_POOL!;
 
@@ -19,33 +28,18 @@ interface ConvertProps {
 const Convert: FunctionComponent<ConvertProps> = ({ currentBlock }) => {
   const { loading, currentConversion } = getConversion(currentBlock);
 
-  // const onClick = async () => {
-  //   if (!depositAmount || depositAmount <= 0) {
-  //     setInvalidInput(true);
-  //   } else {
-  //     setLoading(true);
+  const onClick = async () => {
+    const signingService = connex.vendor.sign("tx");
 
-  //     const signingService = connex.vendor.sign("tx");
+    const conversionClause = connex.thor
+      .account(account)
+      .method(energyConversionABI)
+      .asClause();
 
-  //     const amountToDeposit =
-  //       "0x" +
-  //       new BigNumber(depositAmount)
-  //         .multipliedBy(1e18)
-  //         .dp(0)
-  //         .toString(16);
-
-  //     const depositClause = connex.thor
-  //       .account(account)
-  //       .method(depositABI)
-  //       .value(amountToDeposit)
-  //       .asClause();
-
-  //     try {
-  //       await signingService.request([{ ...depositClause }]);
-  //     } catch {}
-  //     setLoading(false);
-  //   }
-  // };
+    try {
+      await signingService.request([{ ...conversionClause }]);
+    } catch {}
+  };
 
   return (
     <div>
@@ -83,7 +77,8 @@ const Convert: FunctionComponent<ConvertProps> = ({ currentBlock }) => {
         color="primary"
         style={{ marginBottom: 20 }}
         fullWidth
-        disabled={loading}
+        disabled={loading || currentConversion!.amountTHOR === "0.00"}
+        onClick={onClick}
       >
         Convert
       </Button>

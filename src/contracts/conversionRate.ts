@@ -81,7 +81,7 @@ export const getConversion = (currentBlock: number | undefined) => {
 
         setCurrentConversion({
           amountTHOR: formattedThorBalance,
-          amountVET: formattedVETAmount
+          amountVET: "~" + formattedVETAmount
         });
       }
 

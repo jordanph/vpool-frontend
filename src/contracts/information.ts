@@ -34,10 +34,13 @@ export const getInformation = (
           .method(balanceOfABI)
           .call(accountAddress);
 
-        const formattedBalanceOf = Math.round(
-          (balanceOf.decoded!["0"] / totalMintedSupply.decoded!["0"]) *
-            formattedBalance
-        );
+        const formattedBalanceOf =
+          totalMintedSupply.decoded!["0"] != 0
+            ? Math.round(
+                (balanceOf.decoded!["0"] / totalMintedSupply.decoded!["0"]) *
+                  formattedBalance
+              )
+            : 0;
 
         setCurrentInformation({
           balanceOfUser: formattedBalanceOf,
