@@ -36,7 +36,7 @@ export const getInformation = (
 
         const formattedBalanceOf =
           totalMintedSupply.decoded!["0"] != 0
-            ? Math.round(
+            ? Math.floor(
                 (balanceOf.decoded!["0"] / totalMintedSupply.decoded!["0"]) *
                   formattedBalance
               )
