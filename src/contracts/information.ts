@@ -21,7 +21,7 @@ export const getInformation = (
   useEffect(() => {
     const getCurrentInformation = async () => {
       const balance = await connex.thor.account(account).get();
-      const formattedBalance = Math.round(parseInt(balance.balance, 16) / 1e18);
+      const formattedBalance = Math.floor(parseInt(balance.balance, 16) / 1e18);
 
       if (accountAddress) {
         const totalMintedSupply = await connex.thor
@@ -38,7 +38,7 @@ export const getInformation = (
           totalMintedSupply.decoded!["0"] != 0
             ? Math.floor(
                 (balanceOf.decoded!["0"] / totalMintedSupply.decoded!["0"]) *
-                  formattedBalance
+                  (parseInt(balance.balance, 16) / 1e18)
               )
             : 0;
 

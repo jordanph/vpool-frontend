@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import Link from "@material-ui/core/Link";
 import Deposit from "./Deposit";
 import Withdraw from "./Withdraw";
 import Information from "./Information";
@@ -10,6 +11,7 @@ import { getCurrentBlock } from "./contracts/currentBlock";
 import Overlay from "./Overlay";
 import Convert from "./Convert";
 import styled from "styled-components";
+import AppInformation from "./AppInformation";
 
 const tabEnum = {
   Deposit: 0,
@@ -39,6 +41,7 @@ const App = () => {
   return (
     <div>
       <Header />
+      <AppInformation />
       <AppDiv>
         <Paper
           square
